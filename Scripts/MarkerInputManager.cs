@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using oi.plugin.transform;
+#if !UNITY_EDITOR && UNITY_METRO
 using HoloToolkit.Unity.InputModule;
+#endif
 
 namespace oi.plugin.kinectMarkerAlignment {
 
-    public class MarkerInputManager : MonoBehaviour, IInputClickHandler {
+    public class MarkerInputManager : MonoBehaviour
+#if !UNITY_EDITOR && UNITY_METRO
+        , IInputClickHandler 
+#endif
+        {
 
         TransformSender transformSender;
         private bool measuring = false;
@@ -56,8 +62,10 @@ namespace oi.plugin.kinectMarkerAlignment {
             }
         }
 
+#if !UNITY_EDITOR && UNITY_METRO
         void IInputClickHandler.OnInputClicked(InputClickedEventData eventData) {
             transformSender.MeasureAndSend();
         }
+#endif
     }
 }
